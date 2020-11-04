@@ -104,8 +104,11 @@ function insert_user($db, $name, $password){
   $sql = "
     INSERT INTO
       users(name, password)
-    VALUES ('{$name}', '{$password}');
+    VALUES (?,?)
   ";
+  $stmt=$db->prepare($sql);
+  $stmt->bindValue(1,$name,PDO::PARAM_STR);
+  $stmt->bindValue(2,$password,PDO::PARAM_STR);
 
   return execute_query($db, $sql);
 }
