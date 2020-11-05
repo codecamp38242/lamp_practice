@@ -4,7 +4,7 @@
   <?php include VIEW_PATH . 'templates/head.php'; ?>
   
   <title>商品一覧</title>
-  <link rel="stylesheet" href="<?php print htmlspecialchars(STYLESHEET_PATH . 'index.css',ENT_QUOTES,'UTF-8'); ?>">
+  <link rel="stylesheet" href="<?php print (STYLESHEET_PATH . 'index.css'); ?>">
 </head>
 <body>
   <?php include VIEW_PATH . 'templates/header_logined.php'; ?>
@@ -20,16 +20,16 @@
         <div class="col-6 item">
           <div class="card h-100 text-center">
             <div class="card-header">
-              <?php print htmlspecialchars($item['name'],ENT_QUOTES,'UTF-8'); ?>
+              <?php print h($item['name']); ?>
             </div>
             <figure class="card-body">
-              <img class="card-img" src="<?php print htmlspecialchars(IMAGE_PATH . $item['image'],ENT_QUOTES,'UTF-8'); ?>">
+              <img class="card-img" src="<?php print h(IMAGE_PATH . $item['image']); ?>">
               <figcaption>
-                <?php print htmlspecialchars(number_format($item['price'],ENT_QUOTES,'UTF-8')); ?>円
+                <?php print h(number_format($item['price'])); ?>円
                 <?php if($item['stock'] > 0){ ?>
                   <form action="index_add_cart.php" method="post">
                     <input type="submit" value="カートに追加" class="btn btn-primary btn-block">
-                    <input type="hidden" name="item_id" value="<?php print htmlspecialchars($item['item_id'],ENT_QUOTES,'UTF-8'); ?>">
+                    <input type="hidden" name="item_id" value="<?php print h($item['item_id']); ?>">
                   </form>
                 <?php } else { ?>
                   <p class="text-danger">現在売り切れです。</p>
