@@ -119,13 +119,12 @@ function purchase_carts($db, $carts){
     }
     
     create_history($db,$carts);
-
-    create_details($db,$carts,$history_id);
   
   if(has_error() === true){
     $db -> rollback();
+  } else {
+    $db -> commit();
   }
-  $db -> commit();
 
   delete_user_carts($db, $carts[0]['user_id']);
 }
@@ -198,17 +197,13 @@ function insert_details($db,$history_id,$item_id,$price,$amount){
 }
 
 function create_history($db,$carts){
-  foreach($carts as $cart){
-    if(insert_history(
-      $db,
-      $cart['user_id']
-    ) === false){
-      set_error($cart['name'] . 'の購入に失敗しました。');
-    }
+  if(insert_history($db,$carts[0]['user_id']) === false) {
+    set_error('購入履歴の追加に失敗しました。');
+    return false;
   }
-}
 
-function create_details($db,$carts,$history_id){
+  $history_id = $db->lastInsertId();
+
   foreach($carts as $cart){
     if(insert_details(
       $db,
@@ -217,7 +212,9 @@ function create_details($db,$carts,$history_id){
       $cart['price'],
       $cart['amount']
     ) === false){
-      set_error($cart['name'] . 'の購入に失敗しました。');
+      set_error($cart['name'] . 'の購入明細の追加に失敗しました。');
+      return false;
     }
   }
+  return true;
 }
