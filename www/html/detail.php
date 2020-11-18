@@ -24,7 +24,7 @@ if(is_valid_csrf_token($token)){
     $histories = get_detail_history($db,$history_id);
   }else{
     $details = get_user_detail($db,$user['user_id'],$history_id);
-    $histories = get_detail_history($db,$history_id);
+    $histories = get_detail_history($db,$history_id,$user['user_id']);
   }
 }else{
   set_error('不正な操作が行われました');

@@ -53,7 +53,8 @@ function get_all_user_detail($db,$history_id){
   }
 
 
-  function get_detail_history($db,$history_id){
+  function get_detail_history($db,$history_id,$user_id = null){
+    $params = [$history_id];
     $sql = "
       SELECT
         purchase_history.history_id,
@@ -66,12 +67,16 @@ function get_all_user_detail($db,$history_id){
       ON
         purchase_history.history_id = purchase_details.history_id
       WHERE
-        purchase_history.history_id = ?
-      GROUP BY
+        purchase_history.history_id = ?";
+    if($user_id !== null){
+      $sql.=" AND user_id = ?";
+      $params[] = $user_id;
+    }
+    $sql.=" GROUP BY
         purchase_history.history_id
       ";
-  
-      return fetch_all_query($db,$sql,[$history_id]);
+    
+      return fetch_all_query($db,$sql,$params);
   }
 
   // function filter($histories,$history_id){
