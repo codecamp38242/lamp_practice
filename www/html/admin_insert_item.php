@@ -27,11 +27,12 @@ $token = get_post('token');
 if(is_valid_csrf_token($token)){
 $image = get_file('image');
 
-if(regist_item($db, $name, $price, $stock, $status, $image)){
-  set_message('商品を登録しました。');
-}else {
-  set_error('商品の登録に失敗しました。');
-}
+  if(regist_item($db, $name, $price, $stock, $status, $image)){
+    set_message('商品を登録しました。');
+  }else {
+    set_error('商品の登録に失敗しました。');
+  }
+  
 }else{
   set_error('不正な操作が行われました');
 }

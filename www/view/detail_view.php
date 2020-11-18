@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <?php include VIEW_PATH . 'templates/head.php' ; ?>
-  <title>購入履歴</title>
+  <?php include VIEW_PATH . 'templates/head.php'; ?>
+  <title>購入明細</title>
   <link rel="stylesheet" href="<?php STYLESHEET_PATH . 'admin.css' ; ?>">
 </head>
 <body>
@@ -10,7 +10,7 @@
 
   <div class="container">
     <?php include VIEW_PATH . 'templates/messages.php' ; ?>
-    <h1>購入履歴</h1>
+    <h1>購入明細</h1>
       <?php if(count($histories) > 0){ ?>
         <table class="table table-bordered">
           <thead class="thead-light">
@@ -18,7 +18,6 @@
               <th>注文番号</th>
               <th>購入日時</th>
               <th>合計金額</th>
-              <th>操作</th>
             </tr>
           </thead>
           <tbody>
@@ -27,19 +26,34 @@
                 <td><?php print h($history['history_id']); ?></td>
                 <td><?php print h($history['created']); ?></td>
                 <td><?php print h($history['total']); ?></td>
-                <td>
-                  <form method="post" action="detail.php">
-                    <input type="submit" value="購入明細表示" class="btn btn-secondary">
-                    <input type="hidden" name="history_id" value="<?php print h($history['history_id']); ?>">
-                    <input type="hidden" name="token" value="<?php print $token; ?>">
-                  </form>
-                </td>
               </tr>
             <?php } ?>
           </tbody>
         </table>
-      <?php } else { ?>
-        <p>購入履歴がありません。</p>
+      <?php } ?>
+      <?php if(count($details) > 0){ ?>
+        <table class="table table-bordered">
+          <thead class="thead-light">
+            <tr>
+              <th>商品名</th>
+              <th>購入時の商品価格</th>
+              <th>購入数</th>
+              <th>小計</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach($details as $detail){ ?>
+              <tr>
+                <td><?php print h($detail['name']); ?></td>
+                <td><?php print h($detail['price']); ?></td>
+                <td><?php print h($detail['amount']); ?></td>
+                <td><?php print h($detail['subtotal']); ?></td>
+              </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+      <?php }else{ ?>
+        <p>購入明細がありません。</p>
       <?php } ?>
   </div>
 </body>
