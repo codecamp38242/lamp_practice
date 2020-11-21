@@ -41,7 +41,11 @@
       <?php } ?>
       </div>
     </div>
+    <p><?php print h($all_items_count); ?></p>
+    <p><?php print h($offset); ?></p>
+    <p><?php print h($max_page); ?></p>
+    <p><?php print h($now_page); ?></p>
+    <a href="?page=1">1</a><a href="?page=2">2</a>
   </div>
-  
 </body>
 </html>

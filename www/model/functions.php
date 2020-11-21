@@ -155,3 +155,9 @@ function is_valid_csrf_token($token){
   // get_session()はユーザー定義関数
   return $token === get_session('csrf_token');
 }
+
+function for_num($num){
+  for($i = 1;$i <= $num;$i++){
+    return $i;
+  }
+}
