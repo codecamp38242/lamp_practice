@@ -39,11 +39,10 @@ function get_items($db, $is_open = false, $offset = null, $row_count = 0 ){
       WHERE status = 1
     ';
   }
-  $sql .= "
-      LIMIT {$row_count}
-  ";
+      
   if($offset !== null){
      $sql .="
+        LIMIT {$row_count}
         OFFSET {$offset}
      ";
   }
