@@ -22,7 +22,7 @@ function get_item($db, $item_id){
   return fetch_query($db, $sql,[$item_id]);
 }
 
-function get_items($db, $is_open = false){
+function get_items($db, $is_open = false, $offset = null, $row_count = 0 ){
   $sql = '
     SELECT
       item_id, 
@@ -39,8 +39,31 @@ function get_items($db, $is_open = false){
       WHERE status = 1
     ';
   }
+      
+  if($offset !== null){
+     $sql .="
+        LIMIT {$row_count}
+        OFFSET {$offset}
+     ";
+  }
 
   return fetch_all_query($db, $sql);
+}
+
+function get_open_count($db){
+  $sql = '
+    SELECT 
+    COUNT(*)
+    FROM
+      items
+    WHERE
+      status = 1
+    ';
+
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
+  $count = $stmt->fetchColumn();
+  return $count === false ? 0 : $count;
 }
 
 function get_all_items($db){

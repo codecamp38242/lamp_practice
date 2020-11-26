@@ -41,7 +41,12 @@
       <?php } ?>
       </div>
     </div>
+    <p>
+      <?php print h($all_items_count); ?>件中&nbsp;
+      <?php print h($start_item); ?>-
+      <?php print h($last_item); ?>件目の商品&emsp;
+      <?php link_page($page_num,$max_page,$now_page); ?>
+    </p>
   </div>
-  
 </body>
 </html>
